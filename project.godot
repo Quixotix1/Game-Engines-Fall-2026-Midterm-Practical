@@ -14,6 +14,10 @@ config/name="GEFall2026Midterm"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://sprites/icon.svg"
 
+[autoload]
+
+player_state="*res://scripts/player_state.gd"
+
 [input]
 
 up={

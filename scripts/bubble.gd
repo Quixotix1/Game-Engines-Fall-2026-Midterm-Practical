@@ -5,15 +5,12 @@ extends Area2D
 
 @export var damage: float
 @export var travel_speed: float
-@export var lifespan: float
-
-var velocity: float
 
 func _ready() -> void:
-	velocity = velocity * travel_speed
+	travel_speed = travel_speed if player_state.facing_right else -travel_speed
 
 func _process(delta: float) -> void:
-	position.x += velocity
+	position.x += travel_speed
 
 func _on_body_entered(body: Node2D) -> void:
 	queue_free()

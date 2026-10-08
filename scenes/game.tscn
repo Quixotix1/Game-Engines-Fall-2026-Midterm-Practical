@@ -1,18 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnxq58121ge20"]
+[gd_scene load_steps=9 format=3 uid="uid://bnxq58121ge20"]
 
 [ext_resource type="PackedScene" uid="uid://b5vmad5rwbpee" path="res://scenes/bub.tscn" id="1_ejuh8"]
 [ext_resource type="Texture2D" uid="uid://cocxnyurexdrw" path="res://sprites/blank.png" id="2_jhub8"]
+[ext_resource type="PackedScene" uid="uid://btdk4wssarpt7" path="res://scenes/bubble.tscn" id="3_fgfsl"]
+[ext_resource type="Script" path="res://scripts/spawner.gd" id="4_ouht7"]
+[ext_resource type="PackedScene" uid="uid://h50yda715yvm" path="res://scenes/enemies/blue_enemy.tscn" id="4_pj3vp"]
+[ext_resource type="PackedScene" uid="uid://chuyn5cwsefyh" path="res://scenes/enemies/red_enemy.tscn" id="5_c8g6b"]
+[ext_resource type="PackedScene" uid="uid://4hh2p2b74gox" path="res://scenes/enemies/white_enemy.tscn" id="6_8u04k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ekoo5"]
 size = Vector2(214, 28)
 
 [node name="Game" type="Node2D"]
 
-[node name="Bub" parent="." instance=ExtResource("1_ejuh8")]
+[node name="Bub" parent="." groups=["Player"] instance=ExtResource("1_ejuh8")]
 position = Vector2(131, 90)
 scale = Vector2(1.90231, 1.90231)
 speed = 200.0
 jump_velocity = -550.0
+bubble = ExtResource("3_fgfsl")
 
 [node name="Platforms" type="Node2D" parent="."]
 
@@ -131,3 +137,14 @@ shape = SubResource("RectangleShape2D_ekoo5")
 [node name="Sprite2D" type="Sprite2D" parent="Platforms/StaticBody2D10"]
 scale = Vector2(0.179, 0.031)
 texture = ExtResource("2_jhub8")
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2(120, 218)
+script = ExtResource("4_ouht7")
+enemies = Array[PackedScene]([ExtResource("4_pj3vp"), ExtResource("5_c8g6b"), ExtResource("6_8u04k")])
+
+[node name="Timer" type="Timer" parent="Spawner"]
+wait_time = 3.0
+autostart = true
+
+[connection signal="timeout" from="Spawner/Timer" to="Spawner" method="_on_timer_timeout"]
